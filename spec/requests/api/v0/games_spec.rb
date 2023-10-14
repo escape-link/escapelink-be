@@ -1,10 +1,10 @@
 require 'rails_helper'
 
-RSpec.describe GamesController, type: :controller do
+RSpec.describe Api::V0::GamesController, type: :controller do
   describe 'POST #create' do
     it 'creates a new Game instance and returns a link' do
       post :create
-      expect(response).to have_http_status(:ok)
+      expect(response).to have_http_status(:created)
 
       response_data = JSON.parse(response.body)
       expect(response_data).to include('game_token', 'game_link')
