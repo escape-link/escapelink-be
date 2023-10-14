@@ -7,10 +7,10 @@ RSpec.describe Api::V0::GamesController, type: :controller do
       expect(response).to have_http_status(:created)
 
       response_data = JSON.parse(response.body)
-      expect(response_data).to include('game_token', 'game_link')
+      expect(response_data).to include('room_name', 'game_link')
 
-      expect(response_data['game_token']).to be_a(String)
-      expect(response_data['game_token']).not_to be_empty
+      expect(response_data['room_name']).to be_a(String)
+      expect(response_data['room_name']).not_to be_empty
       expect(response_data['game_link']).to be_a(String)
       expect(response_data['game_link']).not_to be_empty
     end

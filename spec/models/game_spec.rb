@@ -7,7 +7,6 @@ RSpec.describe Game, type: :model do
     it { should validate_presence_of(:puzzle_3_solved) }
     it { should validate_presence_of(:puzzle_4_solved) }
     it { should validate_presence_of(:puzzle_5_solved) }
-    it { should validate_presence_of(:game_token) }
   end
 
   describe "#initialize" do
@@ -18,9 +17,10 @@ RSpec.describe Game, type: :model do
       expect(game.puzzle_3_solved).to eq(0)
       expect(game.puzzle_4_solved).to eq(0)
       expect(game.puzzle_5_solved).to eq(0)
-      expect(game.game_token).to be_a(String)
+      expect(game.room_name).to be_a(String)
+      expect(game.room_name).to_not be_nil
     end
-
+    
     it 'tracks puzzle states' do
       game = Game.create!(puzzle_1_solved: 1, puzzle_2_solved: 0, puzzle_3_solved: 1, puzzle_4_solved: 0, puzzle_5_solved: 0)
       expect(game.puzzle_1_solved).to eq(1)

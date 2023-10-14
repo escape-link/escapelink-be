@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.0].define(version: 2023_10_14_201729) do
+ActiveRecord::Schema[7.0].define(version: 2023_10_14_184911) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
 
@@ -20,9 +20,9 @@ ActiveRecord::Schema[7.0].define(version: 2023_10_14_201729) do
     t.integer "puzzle_3_solved", default: 0
     t.integer "puzzle_4_solved", default: 0
     t.integer "puzzle_5_solved", default: 0
+    t.string "room_name"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
-    t.string "game_token", default: "gen_random_uuid()"
   end
 
 end
