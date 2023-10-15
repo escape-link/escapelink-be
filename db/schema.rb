@@ -20,6 +20,7 @@ ActiveRecord::Schema[7.0].define(version: 2023_10_14_184911) do
     t.integer "puzzle_3_solved", default: 0
     t.integer "puzzle_4_solved", default: 0
     t.integer "puzzle_5_solved", default: 0
+    t.string "room_name"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
   end
