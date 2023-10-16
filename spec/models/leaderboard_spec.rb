@@ -20,21 +20,19 @@ RSpec.describe Leaderboard, type: :model do
     it "SAD PATH:  should not initialize with missing/nil values" do
       # name = "The Husslers"
       time_seconds = 5400
-      team_entry = Leaderboard.create!(time_seconds: time_seconds)
+      team_entry = Leaderboard.new(time_seconds: time_seconds)
 
-      expect(team_entry.group_name).to_not be_a(String)
-      expect(team_entry.group_name).to_not eq(name)
-      expect(team_entry.time_seconds).to_not eq(time_seconds)
+      expect(team_entry).to_not be_valid
+      expect(team_entry.errors[:group_name]).to include("can't be blank")
     end
     
     it "SAD PATH:  should not initialize with missing values" do
       name = "The Husslers"
       # time_seconds = 5400
-      team_entry = Leaderboard.create!(group_name: name)
+      team_entry = Leaderboard.new(group_name: name)
 
-      expect(team_entry.group_name).to_not be_a(String)
-      expect(team_entry.group_name).to_not eq(name)
-      expect(team_entry.time_seconds).to_not eq(time_seconds)
+      expect(team_entry).to_not be_valid
+      expect(team_entry.errors[:time_seconds]).to include("can't be blank")
     end
   end
 end
