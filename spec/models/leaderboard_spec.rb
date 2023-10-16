@@ -37,8 +37,26 @@ RSpec.describe Leaderboard, type: :model do
   end
 
   describe "update leaderboard" do
-    it "HAPPY PATH: the new score does not fit in the top ten" do
-      
+    it "HAPPY PATH: the new score fits in the top ten" do
+      scores = create_list(:leaderboard, 10)
+
+      new_score = 850
+      new_group_name = "Ecstatic-Chartreuse-SonicTheHedgehog"
+
+      message = Leaderboard.update_leaderboard(new_group_name, new_score)
+
+      expect(message).to eq("Congratulations! You've claimed a spot on the leaderboard!")
+    end
+
+    it "SAD PATH: the new score does not fit into the top ten" do
+      scores = create_list(:leaderboard, 10)
+
+      new_score = 3100
+      new_group_name = "Frolicking-ArmyGreen-KnucklesTheEchidna"
+
+      message = Leaderboard.update_leaderboard(new_group_name, new_score)
+
+      expect(message).to eq("Sorry, you didn't make the leaderboard.")
     end
   end
 end
