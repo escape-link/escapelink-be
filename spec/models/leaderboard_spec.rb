@@ -35,4 +35,28 @@ RSpec.describe Leaderboard, type: :model do
       expect(team_entry.errors[:time_seconds]).to include("can't be blank")
     end
   end
+
+  describe "update leaderboard" do
+    it "HAPPY PATH: the new score fits in the top ten" do
+      scores = create_list(:leaderboard, 10)
+
+      new_group_name = "Ecstatic-Chartreuse-SonicTheHedgehog"
+      new_score = 850
+
+      message = Leaderboard.update_leaderboard(new_group_name, new_score)
+
+      expect(message).to eq("Congratulations! You've claimed a spot on the leaderboard!")
+    end
+
+    it "SAD PATH: the new score does not fit into the top ten" do
+      scores = create_list(:leaderboard, 10)
+
+      new_group_name = "Frolicking-ArmyGreen-KnucklesTheEchidna"
+      new_score = 3100
+
+      message = Leaderboard.update_leaderboard(new_group_name, new_score)
+
+      expect(message).to eq("Sorry, you didn't make the leaderboard.")
+    end
+  end
 end
