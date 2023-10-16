@@ -35,4 +35,10 @@ RSpec.describe Leaderboard, type: :model do
       expect(team_entry.errors[:time_seconds]).to include("can't be blank")
     end
   end
+
+  describe "update leaderboard" do
+    it "HAPPY PATH: the new score does not fit in the top ten" do
+      
+    end
+  end
 end
