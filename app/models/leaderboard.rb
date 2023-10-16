@@ -3,13 +3,18 @@ class Leaderboard < ApplicationRecord
   validates :time_seconds, presence: true
 
 
-  def self.update_leaderboard(group_name, time_seconds)
-    #check existing leaderboard scores
-    #if the new score is less than the other ten, 
-    #drop the row with highest time and add in the new
-    # leaderboard_scores.each do |leaderboard_score|
-      # if time_seconds < leaderboard_score
-      # leaderboard_score.last.destroy
-
+  def self.update_leaderboard(new_group_name, new_time_seconds)
+    all_entries = Leaderboard.all 
+    
+    max_time_seconds = all_entries.maximum(:time_seconds)
+    if new_time_seconds > max_time_seconds
+      message = "Sorry, you didn't make the leaderboard."
+    else
+      entry_to_remove = all_entries.find_by(time_seconds: max_time_seconds)
+      entry_to_remove.destroy
+      Leaderboard.create(group_name: new_group_name, time_seconds: new_time_seconds)
+      message = "Congratulations! You've claimed a spot on the leaderboard!"
+    end
+    message 
   end
 end
