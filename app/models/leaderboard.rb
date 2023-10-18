@@ -1,9 +1,10 @@
 class Leaderboard < ApplicationRecord
-  validates :group_name, presence: true
+  validates :game_name, presence: true
   validates :time_seconds, presence: true
+  validates :room_id, presence: true
 
 
-  def self.update_leaderboard(new_group_name, new_time_seconds)
+  def self.update_leaderboard(new_game_name, new_time_seconds)
     all_entries = Leaderboard.all 
     
     max_time_seconds = all_entries.maximum(:time_seconds)
@@ -12,7 +13,7 @@ class Leaderboard < ApplicationRecord
     else
       entry_to_remove = all_entries.find_by(time_seconds: max_time_seconds)
       entry_to_remove.destroy
-      Leaderboard.create(group_name: new_group_name, time_seconds: new_time_seconds)
+      Leaderboard.create(game_name: new_game_name, time_seconds: new_time_seconds)
       message = "Congratulations! You've claimed a spot on the leaderboard!"
     end
     message 
