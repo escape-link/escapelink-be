@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.0].define(version: 2023_10_18_004612) do
+ActiveRecord::Schema[7.0].define(version: 2023_10_18_175253) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
 
@@ -31,11 +31,13 @@ ActiveRecord::Schema[7.0].define(version: 2023_10_18_004612) do
   end
 
   create_table "games", force: :cascade do |t|
-    t.string "room_name"
+    t.string "game_name"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.datetime "start_time", precision: nil
-    t.index ["room_name"], name: "index_games_on_room_name", unique: true
+    t.bigint "room_id"
+    t.index ["game_name"], name: "index_games_on_game_name", unique: true
+    t.index ["room_id"], name: "index_games_on_room_id"
   end
 
   create_table "leaderboards", force: :cascade do |t|
@@ -72,6 +74,7 @@ ActiveRecord::Schema[7.0].define(version: 2023_10_18_004612) do
 
   add_foreign_key "game_puzzles", "games"
   add_foreign_key "game_puzzles", "puzzles"
+  add_foreign_key "games", "rooms"
   add_foreign_key "leaderboards", "rooms"
   add_foreign_key "messages", "channels"
   add_foreign_key "puzzles", "rooms"

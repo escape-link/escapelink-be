@@ -1,7 +1,7 @@
 class Game < ApplicationRecord
-  before_validation :generate_room_name
+  before_validation :generate_game_name
   
-  validates_presence_of :room_name, :start_time
+  validates_presence_of :game_name
 
   has_many :game_puzzles
   has_many :puzzles, through: :game_puzzles
@@ -15,15 +15,15 @@ class Game < ApplicationRecord
 
   require 'faker'
 
-  def generate_room_name
+  def generate_game_name
     a = Faker::Adjective.negative
     b = Faker::Color.color_name
     c = Faker::Games::Pokemon.name
-    self.room_name = "#{a}-#{b}-#{c}"
+    self.game_name = "#{a}-#{b}-#{c}"
   end
 
-  def tear_down_game(room_name)
-    game_to_remove = Game.find_by(room_name: room_name)
+  def tear_down_game(game_name)
+    game_to_remove = Game.find_by(game_name: room_name)
     game_to_remove.destroy
   end
 end
