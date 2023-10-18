@@ -1,11 +1,12 @@
 Rails.application.routes.draw do
-  # Define your application routes per the DSL in https://guides.rubyonrails.org/routing.html
-
-  # Defines the root path route ("/")
-  # root "articles#index"
   namespace :api do
     namespace :v0 do
-      resources :games, only: [:create]
+      resources :games, only: [:create] do
+        member do
+          post :start_game
+          post :mark_users_ready
+        end
+      end
       resources :messages, only: [:create]
     end
   end
