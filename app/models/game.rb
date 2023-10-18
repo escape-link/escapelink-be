@@ -1,7 +1,7 @@
 class Game < ApplicationRecord
   before_validation :generate_game_name
   
-  validates_presence_of :game_name
+  validates_presence_of :game_name, :room_id
 
   has_many :game_puzzles
   has_many :puzzles, through: :game_puzzles
@@ -23,7 +23,7 @@ class Game < ApplicationRecord
   end
 
   def tear_down_game(game_name)
-    game_to_remove = Game.find_by(game_name: room_name)
+    game_to_remove = Game.find_by(game_name: game_name)
     game_to_remove.destroy
   end
 end
