@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.0].define(version: 2023_10_16_173711) do
+ActiveRecord::Schema[7.0].define(version: 2023_10_18_004612) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
 
@@ -20,15 +20,22 @@ ActiveRecord::Schema[7.0].define(version: 2023_10_16_173711) do
     t.datetime "updated_at", null: false
   end
 
+  create_table "game_puzzles", force: :cascade do |t|
+    t.integer "puzzle_solved"
+    t.bigint "game_id", null: false
+    t.bigint "puzzle_id", null: false
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["game_id"], name: "index_game_puzzles_on_game_id"
+    t.index ["puzzle_id"], name: "index_game_puzzles_on_puzzle_id"
+  end
+
   create_table "games", force: :cascade do |t|
-    t.integer "puzzle_1_solved", default: 0
-    t.integer "puzzle_2_solved", default: 0
-    t.integer "puzzle_3_solved", default: 0
-    t.integer "puzzle_4_solved", default: 0
-    t.integer "puzzle_5_solved", default: 0
     t.string "room_name"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.datetime "start_time", precision: nil
+    t.index ["room_name"], name: "index_games_on_room_name", unique: true
   end
 
   create_table "leaderboards", force: :cascade do |t|
@@ -36,6 +43,8 @@ ActiveRecord::Schema[7.0].define(version: 2023_10_16_173711) do
     t.integer "time_seconds"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.bigint "room_id"
+    t.index ["room_id"], name: "index_leaderboards_on_room_id"
   end
 
   create_table "messages", force: :cascade do |t|
@@ -47,5 +56,23 @@ ActiveRecord::Schema[7.0].define(version: 2023_10_16_173711) do
     t.index ["channel_id"], name: "index_messages_on_channel_id"
   end
 
+  create_table "puzzles", force: :cascade do |t|
+    t.bigint "room_id", null: false
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["room_id"], name: "index_puzzles_on_room_id"
+  end
+
+  create_table "rooms", force: :cascade do |t|
+    t.string "room_name"
+    t.integer "number_puzzles"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+  end
+
+  add_foreign_key "game_puzzles", "games"
+  add_foreign_key "game_puzzles", "puzzles"
+  add_foreign_key "leaderboards", "rooms"
   add_foreign_key "messages", "channels"
+  add_foreign_key "puzzles", "rooms"
 end
