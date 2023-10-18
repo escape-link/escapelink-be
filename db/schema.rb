@@ -21,7 +21,7 @@ ActiveRecord::Schema[7.0].define(version: 2023_10_18_004612) do
   end
 
   create_table "game_puzzles", force: :cascade do |t|
-    t.integer "puzzle_solved"
+    t.integer "puzzle_solved", default: 0
     t.bigint "game_id", null: false
     t.bigint "puzzle_id", null: false
     t.datetime "created_at", null: false
