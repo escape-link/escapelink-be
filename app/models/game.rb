@@ -1,7 +1,10 @@
 class Game < ApplicationRecord
   before_validation :generate_room_name
   
-  validates :puzzle_1_solved, :puzzle_2_solved, :puzzle_3_solved, :puzzle_4_solved, :puzzle_5_solved, :room_name, presence: true
+  validates_presence_of :room_name, :start_time
+
+  has_many :game_puzzles
+  has_many :puzzles, through: :game_puzzles
 
   def end_game(finish_group_name, finish_score)
     tear_down_game(finish_group_name)
