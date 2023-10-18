@@ -6,6 +6,12 @@ RSpec.describe Room, type: :model do
     it { should validate_presence_of(:number_puzzles) }
   end
 
+  describe "relationships" do
+    it { should have_many :leaderboards }
+    it { should have_many :puzzles }
+    it { should have_many :games }
+  end
+
   describe "#initialize" do
     it "should initialize" do
       room_name = "where's bob?"
