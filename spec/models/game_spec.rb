@@ -2,49 +2,58 @@ require 'rails_helper'
 
 RSpec.describe Game, type: :model do
   describe "validations" do
-    it { should validate_presence_of(:puzzle_1_solved) }
-    it { should validate_presence_of(:puzzle_2_solved) }
-    it { should validate_presence_of(:puzzle_3_solved) }
-    it { should validate_presence_of(:puzzle_4_solved) }
-    it { should validate_presence_of(:puzzle_5_solved) }
+    it { should validate_presence_of(:room_id) }
+  end
+
+  describe "relationships" do
+    it { should have_many(:game_puzzles) }
+    it { should have_many(:puzzles).through(:game_puzzles) }
   end
 
   describe "#initialize" do
     it "should initialize with default values" do
-      game = Game.create!
-      expect(game.puzzle_1_solved).to eq(0)
-      expect(game.puzzle_2_solved).to eq(0)
-      expect(game.puzzle_3_solved).to eq(0)
-      expect(game.puzzle_4_solved).to eq(0)
-      expect(game.puzzle_5_solved).to eq(0)
-      expect(game.room_name).to be_a(String)
-      expect(game.room_name).to_not be_nil
-    end
-    
-    it 'tracks puzzle states' do
-      game = Game.create!(puzzle_1_solved: 1, puzzle_2_solved: 0, puzzle_3_solved: 1, puzzle_4_solved: 0, puzzle_5_solved: 0)
-      expect(game.puzzle_1_solved).to eq(1)
-      expect(game.puzzle_2_solved).to eq(0)
-      expect(game.puzzle_3_solved).to eq(1)
-      expect(game.puzzle_4_solved).to eq(0)
-      expect(game.puzzle_5_solved).to eq(0)
+      room = Room.create!(room_name: "Room 1", number_puzzles: 5)
+      game = Game.create!(room_id: room.id)
+
+      expect(game.game_name).to be_a(String)
+      expect(game.game_name).to_not be_nil
+      expect(game.room_id).to eq(room.id)
     end
   end
 
   describe "#end_game" do
-    it "should end the game" do
-      game = Game.create!(puzzle_1_solved: 1, puzzle_2_solved: 1, puzzle_3_solved: 1, puzzle_4_solved: 1, puzzle_5_solved: 1)
-      finish_group_name = game.room_name
-      finish_score = 900
-      leaderboard = create_list(:leaderboard, 10)
+    it "should end the game and show successful leaderboard message" do
+      room = Room.create!(room_name: "Where's Bob?", number_puzzles: 5)
+      leaderboard = create_list(:leaderboard, 10, room_id: room.id)
+      game = Game.create!(room_id: room.id)
+      game_name = game.game_name
+      time_seconds = 900 #fastest time in seconds
 
-      leaderboard_message = game.end_game(finish_group_name, finish_score)
+      leaderboard_message = game.end_game(room_id: room.id, game_name: game_name, time_seconds: time_seconds)
 
-      find_game = Game.find_by(room_name: finish_group_name)
-      expect(find_game).to be_nil
+      find_game = Game.find_by(game_name: game_name)
+      expect(find_game).to be_nil #game should be destroyed
 
-      leaderboard_entry = Leaderboard.find_by(group_name: finish_group_name)
-      expect(leaderboard_entry.time_seconds).to eq(finish_score)
+      leaderboard_entry = Leaderboard.find_by(game_name: game_name)
+      expect(leaderboard_entry.time_seconds).to eq(time_seconds)
+      expect(leaderboard_message).to eq("Congratulations! You've claimed a spot on the leaderboard!")
+    end
+
+    it "should end the game and show unsuccessful leaderboard message" do
+      room = Room.create!(room_name: "Where's Bob?", number_puzzles: 5)
+      leaderboard = create_list(:leaderboard, 10, room_id: room.id)
+      game = Game.create!(room_id: room.id)
+      game_name = game.game_name
+      time_seconds = 4000 #slowest time in seconds
+
+      leaderboard_message = game.end_game(room_id: room.id, game_name: game_name, time_seconds: time_seconds)
+
+      find_game = Game.find_by(game_name: game_name)
+      expect(find_game).to be_nil #game should be destroyed
+
+      leaderboard_entry = Leaderboard.find_by(game_name: game_name)
+      expect(leaderboard_entry).to be_nil
+      expect(leaderboard_message).to eq("Sorry, you didn't make the leaderboard.")
     end
   end
 end

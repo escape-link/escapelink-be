@@ -1,26 +1,30 @@
 class Game < ApplicationRecord
-  before_validation :generate_room_name
+  before_validation :generate_game_name
   
-  validates :puzzle_1_solved, :puzzle_2_solved, :puzzle_3_solved, :puzzle_4_solved, :puzzle_5_solved, :room_name, presence: true
+  validates_presence_of :game_name, :room_id
 
-  def end_game(finish_group_name, finish_score)
-    tear_down_game(finish_group_name)
-    leaderboard_message = Leaderboard.update_leaderboard(finish_group_name, finish_score)
+  has_many :game_puzzles
+  has_many :puzzles, through: :game_puzzles
+
+  def end_game(room_id:, game_name:, time_seconds:)
+    tear_down_game(room_id: room_id, game_name:game_name)
+    leaderboard_message = Leaderboard.update_leaderboard(room_id: room_id, game_name: game_name, time_seconds: time_seconds)
   end
 
   private
 
   require 'faker'
 
-  def generate_room_name
+  def generate_game_name
     a = Faker::Adjective.negative
     b = Faker::Color.color_name
     c = Faker::Games::Pokemon.name
-    self.room_name = "#{a}-#{b}-#{c}"
+    self.game_name = "#{a}-#{b}-#{c}"
   end
 
-  def tear_down_game(room_name)
-    game_to_remove = Game.find_by(room_name: room_name)
-    game_to_remove.destroy
+  def tear_down_game(room_id:, game_name:)
+    game_to_remove = Game.where(room_id: room_id, game_name: game_name).first
+    game_to_remove&.destroy
   end
+  
 end
