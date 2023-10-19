@@ -7,6 +7,8 @@ Rails.application.routes.draw do
     namespace :v0 do
       resources :games, only: [:create]
       resources :messages, only: [:create]
+
+      get '/:room_id/:game_name', to: 'games#show', as: :game_channel
     end
   end
 end
