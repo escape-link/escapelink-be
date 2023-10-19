@@ -41,7 +41,7 @@ ActiveRecord::Schema[7.0].define(version: 2023_10_18_175253) do
   end
 
   create_table "leaderboards", force: :cascade do |t|
-    t.string "group_name"
+    t.string "game_name"
     t.integer "time_seconds"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false

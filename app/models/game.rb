@@ -6,9 +6,9 @@ class Game < ApplicationRecord
   has_many :game_puzzles
   has_many :puzzles, through: :game_puzzles
 
-  def end_game(finish_group_name, finish_score)
-    tear_down_game(finish_group_name)
-    leaderboard_message = Leaderboard.update_leaderboard(finish_group_name, finish_score)
+  def end_game(room_id:, game_name:, time_seconds:)
+    tear_down_game(room_id: room_id, game_name:game_name)
+    leaderboard_message = Leaderboard.update_leaderboard(room_id: room_id, game_name: game_name, time_seconds: time_seconds)
   end
 
   private
@@ -22,8 +22,9 @@ class Game < ApplicationRecord
     self.game_name = "#{a}-#{b}-#{c}"
   end
 
-  def tear_down_game(game_name)
-    game_to_remove = Game.find_by(game_name: game_name)
-    game_to_remove.destroy
+  def tear_down_game(room_id:, game_name:)
+    game_to_remove = Game.where(room_id: room_id, game_name: game_name).first
+    game_to_remove&.destroy
   end
+  
 end
