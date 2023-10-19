@@ -16,7 +16,7 @@ RSpec.describe GamePuzzle, type: :model do
       room_name = "where's bob?"
       number_puzzles = 5
       room = Room.create!(room_name: room_name, number_puzzles: number_puzzles)
-      puzzle = Puzzle.create!(room_id: room.id)
+      puzzle = Puzzle.create!(room_id: room.id, puzzle_identifier: 5)
       game = Game.create!(game_name: "shiny-blue-Charizard", room_id: room.id)
 
       gamepuzzle = GamePuzzle.create!(game_id: game.id, puzzle_id: puzzle.id)
@@ -31,7 +31,7 @@ RSpec.describe GamePuzzle, type: :model do
       number_puzzles = 5
       room_name = "where's bob?"
       room = Room.create!(room_name: room_name, number_puzzles: number_puzzles)
-      puzzle = Puzzle.create!(room_id: room.id)
+      puzzle = Puzzle.create!(room_id: room.id, puzzle_identifier: 4)
 
       gamepuzzle = GamePuzzle.new(puzzle_id: puzzle.id)
 
@@ -42,12 +42,32 @@ RSpec.describe GamePuzzle, type: :model do
       number_puzzles = 5
       room_name = "where's bob?"
       room = Room.create!(room_name: room_name, number_puzzles: number_puzzles)
-      puzzle = Puzzle.create!(room_id: room.id)
+      puzzle = Puzzle.create!(room_id: room.id, puzzle_identifier: 4)
       game_name = "shiny-blue-Charizard"
       game = Game.create!(game_name: game_name, room_id: room.id)
       gamepuzzle = GamePuzzle.new(puzzle_id: puzzle.id)
 
       expect(gamepuzzle).to_not be_valid
+    end
+  end
+
+  describe "#update_puzzle" do
+    it "HAPPY PATH: can update a puzzle" do
+      room_name = "where's bob?"
+      number_puzzles = 5
+      room = Room.create!(room_name: room_name, number_puzzles: number_puzzles)
+      puzzle_1 = Puzzle.create!(room_id: room.id, puzzle_identifier: 1)
+      game = Game.create!(room_id: room.id)
+      game_puzzle = GamePuzzle.first
+
+      expect(game_puzzle).to be_valid
+      expect(game_puzzle.puzzle_solved).to eq(0)
+
+      game_puzzle.update_puzzle(room_name: room_name, puzzle_identifier: 1, game_name: game.game_name)
+
+      game_puzzle = GamePuzzle.first 
+      
+      expect(game_puzzle.puzzle_solved).to eq(1)
     end
   end
 end
