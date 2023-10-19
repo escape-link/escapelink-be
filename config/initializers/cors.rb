@@ -1,6 +1,6 @@
 Rails.application.config.middleware.insert_before 0, Rack::Cors do
   allow do
-    origins 'https://escapelink-fe.vercel.app/' # Adjust this as per your front-end server's address and port
+    origins 'https://escapelink-fe.vercel.app' # Adjust this as per your front-end server's address and port
 
     resource '*',
              headers: :any,
