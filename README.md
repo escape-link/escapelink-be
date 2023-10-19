@@ -4,7 +4,7 @@
 <br />
 <div align="center">
   <a href="https://github.com/github_username/repo_name">
-    <img src="images/logo.png" alt="Logo" width="80" height="80">
+    <img src="public/images/escapelinklogo.png" alt="Logo" width="300" height="65">
   </a>
 
 <h3 align="center">EscapeLink</h3>
@@ -55,8 +55,6 @@
 
 <!-- ABOUT THE PROJECT -->
 ## About The Project
-
-[![Product Name Screen Shot][product-screenshot]](https://example.com)
 
 EscapeLink is a SOA app and needs both this backend repo AND [![GitHub](https://img.shields.io/badge/GitHub-100000?style=for-the-badge&logo=github&logoColor=white) ](https://github.com/escape-link/escapelink-fe) (front-end) in order to be fully functioning.
 
