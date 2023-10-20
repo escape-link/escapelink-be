@@ -19,7 +19,6 @@ class Game < ApplicationRecord
     end_time = DateTime.now.utc
     start_time = game.start_time
     time_seconds = (end_time - start_time)
-  end
   
   private
   
@@ -39,5 +38,12 @@ class Game < ApplicationRecord
   
   def start_timer
     self.update(start_time: Time.now)
+
+  def generate_game_puzzles
+    puzzles = Puzzle.where(room_id: self.room_id)
+
+    puzzles.each do |puzzle|
+      GamePuzzle.create!(game_id: self.id, puzzle_id: puzzle.id, puzzle_solved: 0)
+    end
   end
 end
