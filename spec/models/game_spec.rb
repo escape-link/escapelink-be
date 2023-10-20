@@ -28,6 +28,7 @@ RSpec.describe Game, type: :model do
       game = Game.create!(room_id: room.id)
       game_name = game.game_name
       time_seconds = 900 #fastest time in seconds
+      game.update(start_time: DateTime.now - time_seconds.seconds)
 
       leaderboard_message = game.end_game(room_id: room.id, game_name: game_name)
 
@@ -35,6 +36,7 @@ RSpec.describe Game, type: :model do
       expect(find_game).to be_nil #game should be destroyed
 
       leaderboard_entry = Leaderboard.find_by(game_name: game_name)
+
       expect(leaderboard_entry.time_seconds).to eq(time_seconds)
       expect(leaderboard_message).to eq("Congratulations! You've claimed a spot on the leaderboard!")
     end
@@ -45,6 +47,7 @@ RSpec.describe Game, type: :model do
       game = Game.create!(room_id: room.id)
       game_name = game.game_name
       time_seconds = 4000 #slowest time in seconds
+      game.update(start_time: DateTime.now - time_seconds.seconds)
 
       leaderboard_message = game.end_game(room_id: room.id, game_name: game_name)
 
@@ -57,16 +60,18 @@ RSpec.describe Game, type: :model do
     end
   end
 
-  describe "#start_timer" do
-    it "should start a timer when the game begins" do
+  describe "#stop_timer" do
+    it "can stop a timer and calculate total time seconds" do
       room = Room.create!(room_name: "Where's Bob?", number_puzzles: 5)
       game = Game.create!(room_id: room.id)
       game_name = game.game_name
+      time_seconds = 910 #slowest time in seconds
+      game.update(start_time: DateTime.now - time_seconds.seconds)
 
-      expect(game.start_time).to eq(nil)
+      time_seconds = game.stop_timer(game_name: game_name)
 
-      game.start_timer(game_name: game_name)
-      expect(game.start_time).to_not eq(nil)
+      expect(time_seconds).to be_an Float
+      expect(time_seconds.round).to eq(910)
     end
   end
 end
