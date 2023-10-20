@@ -9,7 +9,7 @@ class Api::V0::GamesController < ApplicationController
       game_name: game.game_name,
       game_link: game_link
     }
-
+    
     render json: response, status: :created
   end
 
