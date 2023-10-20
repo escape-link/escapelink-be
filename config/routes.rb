@@ -7,6 +7,7 @@ Rails.application.routes.draw do
     namespace :v0 do
       resources :games, only: [:create]
       resources :messages, only: [:create]
+      resources :leaderboards, only: [:index]
     end
   end
 end
