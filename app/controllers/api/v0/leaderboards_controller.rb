@@ -1,9 +1,13 @@
 class Api::V0::LeaderboardsController < ApplicationController
   def index
-    @leaderboard = Leaderboard.limit(10)
+    leaderboard = Leaderboard.where(room_id: leaderboard_params[:room_id])
 
-    leaderboard_link = api_v0_leaderboards_path
+    render json: leaderboard, status: 200
+  end
 
-    render json: @leaderboard, status: 200
+  private
+
+  def leaderboard_params
+    params.permit(:room_id)
   end
 end
