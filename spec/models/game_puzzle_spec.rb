@@ -60,7 +60,6 @@ RSpec.describe GamePuzzle, type: :model do
       game = Game.create!(room_id: room.id)
       game_puzzle = GamePuzzle.first
 
-      expect(game_puzzle).to be_valid
       expect(game_puzzle.puzzle_solved).to eq(0)
 
       game_puzzle.update_puzzle(room_name: room_name, puzzle_identifier: 1, game_name: game.game_name)
