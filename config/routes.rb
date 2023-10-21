@@ -10,4 +10,7 @@ Rails.application.routes.draw do
       resources :leaderboards, only: [:index]
     end
   end
+
+  # Mount ActionCable server
+  mount ActionCable.server => '/cable'
 end
