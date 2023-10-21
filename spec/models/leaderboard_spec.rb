@@ -61,4 +61,16 @@ RSpec.describe Leaderboard, type: :model do
       expect(message).to eq("Sorry, you didn't make the leaderboard.")
     end
   end
+
+  describe "being the first one to make the leaderboard" do
+    it "will update the leaderboard" do
+      room = Room.create!(room_name: "Where's Bob?", number_puzzles: 5)
+      game_name = "Ecstatic-Chartreuse-SonicTheHedgehog"
+      time_seconds = 850
+
+      message = Leaderboard.update_leaderboard(room_id: room.id, game_name: game_name, time_seconds: time_seconds)
+
+      expect(message).to eq("Congratulations! You've claimed a spot on the leaderboard!")
+    end
+  end
 end
