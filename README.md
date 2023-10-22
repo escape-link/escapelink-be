@@ -12,14 +12,7 @@
   <p align="center">
     Embark on a mind-bending journey with our sleek and minimalistic escape room app. Featuring five captivating puzzles, you can challenge your wits alone or collaborate with friends to crack the codes and unravel the mysteries together. Get ready to unlock the door to adventure and test your problem-solving skills in the world of EscapeLink!
     <br />
-    <a href="https://github.com/github_username/repo_name"><strong>Explore the docs »</strong></a>
-    <br />
-    <br />
-    <a href="https://github.com/github_username/repo_name">View Demo</a>
-    ·
-    <a href="https://github.com/github_username/repo_name/issues">Report Bug</a>
-    ·
-    <a href="https://github.com/github_username/repo_name/issues">Request Feature</a>
+  
   </p>
 </div>
 
@@ -32,22 +25,22 @@
     <li>
       <a href="#about-the-project">About The Project</a>
       <ul>
-        <li><a href="#built-with">Built With</a></li>
+        <li><a href="#overview">Built With</a></li>
       </ul>
     </li>
     <li>
-      <a href="#getting-started">Getting Started</a>
+      <a href="#built-with">Getting Started</a>
       <ul>
-        <li><a href="#prerequisites">Prerequisites</a></li>
-        <li><a href="#installation">Installation</a></li>
+        <li><a href="#running-on">Prerequisites</a></li>
+        <li><a href="#installation-and-contribution">Installation</a></li>
       </ul>
     </li>
     <li><a href="#usage">Usage</a></li>
     <li><a href="#roadmap">Roadmap</a></li>
     <li><a href="#contributing">Contributing</a></li>
-    <li><a href="#license">License</a></li>
-    <li><a href="#contact">Contact</a></li>
-    <li><a href="#acknowledgments">Acknowledgments</a></li>
+    <li><a href="#endpoints">License</a></li>
+    <li><a href="#authors">Contact</a></li>
+    <li><a href="#planning-tools">Acknowledgments</a></li>
   </ol>
 </details>
 
@@ -130,15 +123,40 @@ To get a local copy, follow these simple instructions
 
 
 ## Endpoints
-
+```
+POST 'api/v0/games' 
+```
+KEY: 'room_name' <br>
+VALUE: 'Where's Bob?'<br>
+(creates a game and returns a unique link)
+```
+POST 'api/v0/messages' 
+```
+(creates and broadcasts a new message via websockets)
+```
+GET 'api/v0/leaderboards' 
+```
+KEY: 'room_name'<br>
+VALUE: 'Where's Bob?'<br>
+(accesses leaderboard data and returns the top ten of a given escape room)
 
 
 <p align="right">(<a href="#readme-top">back to top</a>)</p>
 
 
 
-## Contributors
+## Authors
+- Dani Wilson [![GitHub](https://img.shields.io/badge/GitHub-100000?style=for-the-badge&logo=github&logoColor=white) ](https://github.com/dani-wilson) [![LinkedIn](https://img.shields.io/badge/LinkedIn-0077B5?style=for-the-badge&logo=linkedin&logoColor=white) ](https://www.linkedin.com/in/daniraewilson/)
+- Kaina Cockett [![GitHub](https://img.shields.io/badge/GitHub-100000?style=for-the-badge&logo=github&logoColor=white) ](https://github.com/kcockett) [![LinkedIn](https://img.shields.io/badge/LinkedIn-0077B5?style=for-the-badge&logo=linkedin&logoColor=white) ](https://www.linkedin.com/in/kcockett/)
+- Mike Wood [![GitHub](https://img.shields.io/badge/GitHub-100000?style=for-the-badge&logo=github&logoColor=white) ](https://github.com/MWoodshop) [![LinkedIn](https://img.shields.io/badge/LinkedIn-0077B5?style=for-the-badge&logo=linkedin&logoColor=white) ](https://www.linkedin.com/in/michaelwilliamwood/)
 
+
+<p align="right">(<a href="#readme-top">back to top</a>)</p>
+
+## Planning Tools
+- [![Miro Board](https://img.shields.io/badge/Miro-050038?style=for-the-badge&logo=Miro&logoColor=white)](https://miro.com/app/board/uXjVMmKnWLE=/?share_link_id=729961862050)
+- [![GitHub](https://img.shields.io/badge/GitHub-100000?style=for-the-badge&logo=github&logoColor=white) ](https://github.com/orgs/ontrack-2305/projects/1/views/1)
+- ![Slack](https://img.shields.io/badge/Slack-4A154B?style=for-the-badge&logo=slack&logoColor=white)
 
 <p align="right">(<a href="#readme-top">back to top</a>)</p>
 
