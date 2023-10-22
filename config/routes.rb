@@ -1,7 +1,16 @@
 Rails.application.routes.draw do
-  post "/graphql", to: "graphql#execute"
   # Define your application routes per the DSL in https://guides.rubyonrails.org/routing.html
 
   # Defines the root path route ("/")
   # root "articles#index"
+  namespace :api do
+    namespace :v0 do
+      resources :games, only: [:create]
+      resources :messages, only: [:create]
+      resources :leaderboards, only: [:index]
+    end
+  end
+
+  # Mount ActionCable server
+  mount ActionCable.server => '/cable'
 end

@@ -10,61 +10,73 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.0].define(version: 2023_10_12_161157) do
+ActiveRecord::Schema[7.0].define(version: 2023_10_19_193507) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
 
-  create_table "rooms", force: :cascade do |t|
-    t.text "room_name"
-    t.time "fastest_time"
-    t.text "fastest_time_nickname"
-    t.text "puzzle_1_hint_1"
-    t.text "puzzle_1_hint_2"
-    t.text "puzzle_1_hint_3"
-    t.text "puzzle_2_hint_1"
-    t.text "puzzle_2_hint_2"
-    t.text "puzzle_2_hint_3"
-    t.text "puzzle_3_hint_1"
-    t.text "puzzle_3_hint_2"
-    t.text "puzzle_3_hint_3"
-    t.text "puzzle_4_hint_1"
-    t.text "puzzle_4_hint_2"
-    t.text "puzzle_4_hint_3"
-    t.text "puzzle_5_hint_1"
-    t.text "puzzle_5_hint_2"
-    t.text "puzzle_5_hint_3"
-    t.text "puzzle_6_hint_1"
-    t.text "puzzle_6_hint_2"
-    t.text "puzzle_6_hint_3"
+  create_table "channels", force: :cascade do |t|
+    t.string "name"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
   end
 
-  create_table "user_rooms", force: :cascade do |t|
-    t.bigint "user_id"
+  create_table "game_puzzles", force: :cascade do |t|
+    t.integer "puzzle_solved", default: 0
+    t.bigint "game_id", null: false
+    t.bigint "puzzle_id", null: false
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["game_id"], name: "index_game_puzzles_on_game_id"
+    t.index ["puzzle_id"], name: "index_game_puzzles_on_puzzle_id"
+  end
+
+  create_table "games", force: :cascade do |t|
+    t.string "game_name"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.datetime "start_time", precision: nil
     t.bigint "room_id"
-    t.integer "hints_used"
-    t.integer "puzzle_1_solved", default: 0
-    t.integer "puzzle_2_solved", default: 0
-    t.integer "puzzle_3_solved", default: 0
-    t.integer "puzzle_4_solved", default: 0
-    t.integer "puzzle_5_solved", default: 0
-    t.integer "puzzle_6_solved", default: 0
-    t.time "elapsed_time"
-    t.datetime "created_at", null: false
-    t.datetime "updated_at", null: false
-    t.index ["room_id"], name: "index_user_rooms_on_room_id"
-    t.index ["user_id"], name: "index_user_rooms_on_user_id"
+    t.index ["game_name"], name: "index_games_on_game_name", unique: true
+    t.index ["room_id"], name: "index_games_on_room_id"
   end
 
-  create_table "users", force: :cascade do |t|
-    t.text "nickname"
-    t.text "email"
-    t.text "password_digest"
+  create_table "leaderboards", force: :cascade do |t|
+    t.string "game_name"
+    t.integer "time_seconds"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.bigint "room_id"
+    t.index ["room_id"], name: "index_leaderboards_on_room_id"
+  end
+
+  create_table "messages", force: :cascade do |t|
+    t.bigint "channel_id", null: false
+    t.string "content"
+    t.string "sender_nickname"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["channel_id"], name: "index_messages_on_channel_id"
+  end
+
+  create_table "puzzles", force: :cascade do |t|
+    t.bigint "room_id", null: false
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.integer "puzzle_identifier"
+    t.index ["room_id"], name: "index_puzzles_on_room_id"
+  end
+
+  create_table "rooms", force: :cascade do |t|
+    t.string "room_name"
+    t.integer "number_puzzles"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
   end
 
-  add_foreign_key "user_rooms", "rooms"
-  add_foreign_key "user_rooms", "users"
+  add_foreign_key "game_puzzles", "games"
+  add_foreign_key "game_puzzles", "puzzles"
+  add_foreign_key "games", "rooms"
+  add_foreign_key "leaderboards", "rooms"
+  add_foreign_key "messages", "channels"
+  add_foreign_key "puzzles", "rooms"
 end
