@@ -22,25 +22,14 @@
 <details>
   <summary>Table of Contents</summary>
   <ol>
-    <li>
-      <a href="#about-the-project">About The Project</a>
-      <ul>
-        <li><a href="#overview">Built With</a></li>
-      </ul>
-    </li>
-    <li>
-      <a href="#built-with">Getting Started</a>
-      <ul>
-        <li><a href="#running-on">Prerequisites</a></li>
-        <li><a href="#installation-and-contribution">Installation</a></li>
-      </ul>
-    </li>
-    <li><a href="#usage">Usage</a></li>
-    <li><a href="#roadmap">Roadmap</a></li>
-    <li><a href="#contributing">Contributing</a></li>
-    <li><a href="#endpoints">License</a></li>
-    <li><a href="#authors">Contact</a></li>
-    <li><a href="#planning-tools">Acknowledgments</a></li>
+    <li><a href="#about-the-project">About The Project</a></li>
+    <li><a href="#overview">Overview</a></li>
+    <li><a href="#built-with">Built With</a></li>
+    <li><a href="#running-on">Running On</a></li>
+    <li><a href="#installation-and-contribution">Installation and Contribution</a></li>
+    <li><a href="#endpoints">Endpoints</a></li>
+    <li><a href="#authors">Authors</a></li>
+    <li><a href="#planning-tools">Planning Tools</a></li>
   </ol>
 </details>
 
