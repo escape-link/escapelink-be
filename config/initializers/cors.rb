@@ -1,7 +1,6 @@
 Rails.application.config.middleware.insert_before 0, Rack::Cors do
   allow do
-    origins 'https://escapelink-fe.vercel.app'
-    # origins 'localhost:3001'
+    origins ['https://escapelink-fe.vercel.app', 'localhost:3001']
 
     resource '*',
              headers: :any,
