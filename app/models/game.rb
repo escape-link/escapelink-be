@@ -12,7 +12,7 @@ class Game < ApplicationRecord
     game = Game.find_by(game_name: game_name)
     time_seconds = game.stop_timer(game_name: game_name)
     tear_down_game(room_id: room_id, game_name:game_name)
-    leaderboard_message = Leaderboard.update_leaderboard(room_id: room_id, game_name: game_name, time_seconds: time_seconds)
+    return Leaderboard.update_leaderboard(room_id: room_id, game_name: game_name, time_seconds: time_seconds)
   end
 
   def stop_timer(game_name:)
@@ -35,6 +35,11 @@ class Game < ApplicationRecord
   
   def tear_down_game(room_id:, game_name:)
     game_to_remove = Game.where(room_id: room_id, game_name: game_name).first
+    game_puzzles_to_remove = GamePuzzle.where(game_id: game_to_remove.id)
+
+    game_puzzles_to_remove.each do |game_puzzle|
+      game_puzzle&.destroy
+    end
     game_to_remove&.destroy
   end
 

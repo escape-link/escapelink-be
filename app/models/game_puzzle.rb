@@ -21,6 +21,5 @@ class GamePuzzle < ApplicationRecord
     else
       message = {"game_over": false}
     end
-    return message
   end
 end
