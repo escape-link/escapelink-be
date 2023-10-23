@@ -37,7 +37,8 @@ Rails.application.configure do
   # config.action_cable.mount_path = nil
   # config.action_cable.url = "wss://example.com/cable"
 
-  config.action_cable.allowed_request_origins = ['https://escapelink-fe.vercel.app', 'http://escapelink-fe.vercel.app', 'http://localhost:3001']
+  config.action_cable.allowed_request_origins = ['https://escapelink-fe.vercel.app', 'http://escapelink-fe.vercel.app',
+                                                 'http://localhost:3001']
   # config.action_cable.allowed_request_origins = []
 
   # Force all access to the app over SSL, use Strict-Transport-Security, and use secure cookies.
