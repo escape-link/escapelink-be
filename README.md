@@ -125,9 +125,28 @@ POST 'api/v0/messages'
 ```
 GET 'api/v0/leaderboards' 
 ```
-KEY: 'room_name'<br>
-VALUE: 'Where's Bob?'<br>
+KEY: 'room_id'<br>
+VALUE: '1'<br>
 (accesses leaderboard data and returns the top ten of a given escape room)
+Example data:
+[
+  {
+      "id": 18,
+      "game_name": "wicked-coffee-Clefable",
+      "time_seconds": 1950,
+      "created_at": "2023-11-13T07:20:29.224Z",
+      "updated_at": "2023-11-13T07:20:29.224Z",
+      "room_id": 1
+  },
+  {
+      "id": 3,
+      "game_name": "sore-coral-Zubat",
+      "time_seconds": 3600,
+      "created_at": "2023-10-23T00:44:05.901Z",
+      "updated_at": "2023-10-23T00:44:05.901Z",
+      "room_id": 1
+  }...
+]
 
 
 <p align="right">(<a href="#readme-top">back to top</a>)</p>
